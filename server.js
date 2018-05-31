@@ -1,19 +1,26 @@
 var express = require('express');
-var favicon = require('serve-favicon');
-var path = require('path');
+//var favicon = require('serve-favicon');
 var app = express();
-var inventory = require('./inventory')
-var bodyParser = require('body-parser')
-var fs = require('fs')
 var async = require('async')
-var https = require('https');
 var request = require('request');
 
 app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/public'))
 
 // views -- render ejs views
-app.get('/inventory', function (req, res) {
+app.get('/home', function (req, res) {
+  res.render('home')
+});
 
+app.get('/about', function (req, res) {
+  res.render('about')
+});
+
+app.get('/contact', function (req, res) {
+  res.render('contact')
+});
+
+app.get('/inventory', function (req, res) {
   async.waterfall(
     [
       // read the remote file for all image names
