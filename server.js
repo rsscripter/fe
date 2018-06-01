@@ -9,15 +9,19 @@ app.use(express.static(__dirname + '/public'))
 
 // views -- render ejs views
 app.get('/home', function (req, res) {
-  res.render('home')
+  res.render('pages/home')
 });
 
 app.get('/about', function (req, res) {
-  res.render('about')
+  res.render('pages/about')
 });
 
 app.get('/contact', function (req, res) {
-  res.render('contact')
+  res.render('pages/contact')
+});
+
+app.get('/', function (req, res) {
+  res.render('pages/template')
 });
 
 app.get('/inventory', function (req, res) {
@@ -41,9 +45,8 @@ app.get('/inventory', function (req, res) {
       },
     ],
     // send image urls into view
-    function (err, urls) {
-      console.log(urls);
-      res.render('inventory' , { urls: urls })
+    function (err, machines) {
+      res.render('pages/inventory' , { machines : machines })
     }
   );
 });
