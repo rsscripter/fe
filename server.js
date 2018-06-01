@@ -30,8 +30,12 @@ app.get('/contact', function (req, res) {
   res.render('pages/contact')
 });
 
+app.get('/services', function (req, res) {
+  res.render('pages/services')
+});
+
 app.get('/', function (req, res) {
-  res.render('pages/template')
+  res.render('template/template')
 });
 
 app.post('/mail', function (req, res) {
