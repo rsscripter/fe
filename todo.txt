@@ -1,3 +1,4 @@
 1) home page (this is here: views/pages/home)
 2) about page
+3) footer page (social media links ???) this is here: views/partials/footer
 3) fix scripts for heighlighting current page etc... (big baye will do this one)
