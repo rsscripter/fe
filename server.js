@@ -30,9 +30,9 @@ app.get('/contact', function (req, res) {
   res.render('pages/contact')
 });
 
-app.get('/services', function (req, res) {
+/* app.get('/services', function (req, res) {
   res.render('pages/services')
-});
+}); */
 
 app.get('/', function (req, res) {
   res.render('template/template')
