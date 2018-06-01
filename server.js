@@ -3,9 +3,19 @@ var express = require('express');
 var app = express();
 var async = require('async')
 var request = require('request');
+var mail = require('./mail')
+var bodyParser = require('body-parser')
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'))
+
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
+app.use(express.json());       // to support JSON-encoded bodies
+app.use(express.urlencoded()); // to support URL-encoded bodies
 
 // views -- render ejs views
 app.get('/home', function (req, res) {
@@ -23,6 +33,12 @@ app.get('/contact', function (req, res) {
 app.get('/', function (req, res) {
   res.render('pages/template')
 });
+
+app.post('/mail', function (req, res) {
+  mail.sendmail(req.body.name + ' - Papa Website', JSON.stringify(req.body))
+  res.render('pages/mail')
+});
+
 
 app.get('/inventory', function (req, res) {
   async.waterfall(
@@ -46,12 +62,12 @@ app.get('/inventory', function (req, res) {
     ],
     // send image urls into view
     function (err, machines) {
-      res.render('pages/inventory' , { machines : machines })
+      res.render('pages/inventory', { machines: machines })
     }
   );
 });
 
 // Listen
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 app.listen(port);
 console.log('Listening on localhost:' + port);
