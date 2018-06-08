@@ -11,10 +11,10 @@
             <div style="padding-top: 3%;" class="container">
                 <% machines.forEach(function(machine) { %>
                     <div class="w3-container w3-card w3-white w3-margin-bottom">
-                        <img style="float: left; padding: 3%; height: 350px;width: 500px;" src="<%= machine %>" />
+                        <img style="float: left; padding: 3%; height: 350px;width: 500px;" src="<%= machine.url %>" />
                         <div style="padding: 3%">
                             <h3>
-                                Nicci machine
+                                <%= machine.title %>
                             </h3>
                             <h5>
                                 Very nice nicci machine only 10k

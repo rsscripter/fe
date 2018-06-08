@@ -23,7 +23,24 @@ app.get('/home', function (req, res) {
 });
 
 app.get('/about', function (req, res) {
-  res.render('pages/about')
+
+  async.waterfall(
+    [
+      // read the remote file for all image names
+      function (callback) {
+        request.get("https://raw.githubusercontent.com/rsscripter/feweb/master/about.txt", function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+            callback(null, body);
+          }
+        });
+      },
+    ],
+    // send image urls into view
+    function (err, info) {
+      res.render('pages/about', { info: info })
+    }
+  );
+
 });
 
 app.get('/contact', function (req, res) {
@@ -56,16 +73,22 @@ app.get('/inventory', function (req, res) {
         });
       },
       // add the base url for full image paths
-      function (pics, callback) {
-        curls = []
-        pics.split('\n').forEach(pic => {
-          curls.push("https://raw.githubusercontent.com/rsscripter/feweb/master/" + pic)
+      function (titles, callback) {
+        machines = []
+        titles.split('\n').forEach(title => {
+          machines.push(
+            {
+              url: "https://raw.githubusercontent.com/rsscripter/feweb/master/" + title,
+              title: title
+            }
+          )
         });
-        callback(null, curls);
+        callback(null, machines);
       },
     ],
     // send image urls into view
     function (err, machines) {
+      console.log(machines)
       res.render('pages/inventory', { machines: machines })
     }
   );
