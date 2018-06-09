@@ -11,14 +11,12 @@
             <div style="padding-top: 3%;" class="container">
                 <% machines.forEach(function(machine) { %>
                     <div class="w3-container w3-card w3-white w3-margin-bottom">
-                        <img style="float: left; padding: 3%; height: 350px;width: 500px;" src="<%= machine.url %>" />
+                        <img style="float: left; padding: 3%; height: 350px;width: 500px;" src="<%= machine.pic %>" />
                         <div style="padding: 3%">
                             <h3>
                                 <%= machine.title %>
                             </h3>
-                            <h5>
-                                Very nice nicci machine only 10k
-                            </h5>
+                            <p name="desc"><%= machine.desc %></p> 
                         </div>
                     </div>
                     <% }); %>
@@ -26,5 +24,13 @@
         </div>
 
         <% include ../partials/contact_banner %>
-            <% include ../partials/footer %>
+        <% include ../partials/footer %>
+        <script>
+            var eles = document.getElementsByName("desc")
+            eles.forEach(e => {
+                $.get(e.outerText, function( data ) {
+                    e.outerText = data
+                });
+            });
+        </script>
 </body>

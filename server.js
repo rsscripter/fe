@@ -66,29 +66,29 @@ app.get('/inventory', function (req, res) {
     [
       // read the remote file for all image names
       function (callback) {
-        request.get("https://raw.githubusercontent.com/rsscripter/feweb/master/files.txt", function (error, response, body) {
+        request.get("https://raw.githubusercontent.com/rsscripter/feweb/master/coding_stuff/images.gill", function (error, response, body) {
           if (!error && response.statusCode == 200) {
             callback(null, body);
           }
         });
       },
-      // add the base url for full image paths
-      function (titles, callback) {
+      // compile machine objects
+      function (pic_names, callback) {
         machines = []
-        titles.split('\n').forEach(title => {
+        pic_names.split('\n').forEach(pic_name => {
           machines.push(
             {
-              url: "https://raw.githubusercontent.com/rsscripter/feweb/master/" + title,
-              title: title
+              pic: "https://raw.githubusercontent.com/rsscripter/feweb/master/" + pic_name,
+              title : pic_name.substring( 0, pic_name.lastIndexOf('.') ),
+              desc: "https://raw.githubusercontent.com/rsscripter/feweb/master/" + pic_name.substring( 0, pic_name.lastIndexOf('.') ) + ".txt",
             }
           )
         });
         callback(null, machines);
       },
     ],
-    // send image urls into view
+    // send machine objects into view
     function (err, machines) {
-      console.log(machines)
       res.render('pages/inventory', { machines: machines })
     }
   );
